@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Spotify List Backup</title>
+    <meta name="author" content="qxu">
+    <meta name="description" content="Web pages to backup Spotify playlists.">
+</head>
+<body>
+    <div id="content">
+        <div id="spotify-no-auth">
+            <p>No account authorized.</p>
+        </div>
+        <div id="spotify-yes-auth" style="display: none;">
+            <p>Authorized as <span id="spotify-auth-user"></span></p>
+        </div>
+        <input id="spotify-authorize" type="button" value="Authorize">
+        <input id="spotify-load" type="button" value="Load From Spotify" style="display: none;">
+        <input id="spotify-save" type="button" value="Add to Spotify" style="display: none;">
+        <input id="file-load" type="button" value="Load From File" style="display: none;">
+        <input id="file-save" type="button" value="Save To File" style="display: none;">
+    </div>
+    <div id="drop-zone" style="width: 100%; height: 100%; position: fixed; top: 0; left: 0; visibility: hidden;">
+        <div style="width: 100%; height: 100%; display: flex;">
+            <div style="margin: 1em; border: thick dashed #555555; flex-grow: 1;"></div>
+        </div>
+    </div>
+    <script src="config-private.js"></script>
+    <script src="index.js"></script>
+</body>
+</html>
