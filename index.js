@@ -160,7 +160,7 @@ window.onload = function () {
         var authorizeQueryParams = {
             'client_id': SPOTIFY_CLIENT_ID,
             'response_type': 'token',
-            'redirect_uri': CWD_URL + '/auth-callback.html',
+            'redirect_uri': CD_URL + '/auth-callback.html',
             'scope': 'playlist-read-private playlist-modify-public playlist-modify-private',
             'show_dialog': 'true'
         };
