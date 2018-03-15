@@ -66,14 +66,22 @@ function saveAs(fileName, blob) {
 window.onload = function () {
     var authWindow;
 
-    var spotifyNoAuthElem = document.getElementById('spotify-no-auth');
-    var spotifyYesAuthElem = document.getElementById('spotify-yes-auth');
-    var spotifyAuthUserElem = document.getElementById('spotify-auth-user');
+    var spotifyAuthStatusElem = document.getElementById('spotify-auth-status');
 
     var spotifyLoadElem = document.getElementById('spotify-load');
-    var spotifySaveElem = document.getElementById('spotify-save');
+    var spotifyLoadPlaylistTracksChkbox = document.getElementById('spotify-load-playlist-tracks-chkbox');
+    var spotifyLoadBtn = document.getElementById('spotify-load-btn');
+
     var fileLoadElem = document.getElementById('file-load');
+    var fileLoadBtn = document.getElementById('file-load-btn');
+
+    var loadStatusElem = document.getElementById('load-status');
+
+    var spotifySaveElem = document.getElementById('spotify-save');
+    var spotifySaveBtn = document.getElementById('spotify-save-btn');
+
     var fileSaveElem = document.getElementById('file-save');
+    var fileSaveBtn = document.getElementById('file-save-btn');
 
     var dropZoneElem = document.getElementById('drop-zone');
 
@@ -88,27 +96,30 @@ window.onload = function () {
 
         spotifyGet('https://api.spotify.com/v1/me', auth, function (response) {
             var userId = response['id'];
+            var displayName = response['display_name'];
 
-            spotifyAuthUserElem.textContent = userId + ': ' + response['display_name'];
-            spotifyNoAuthElem.style.display = 'none';
-            spotifyYesAuthElem.style.display = '';
+            spotifyAuthStatusElem.textContent = 'Authorized as ' + userId + ': ' + displayName;
 
-            spotifyLoadElem.onclick = function () {
+            spotifyLoadBtn.onclick = function () {
                 var playlists = [];
                 spotifyGetPlaylists('https://api.spotify.com/v1/me/playlists?limit=50', auth, function (playlists) {
                     window.playlists = playlists;
+                    loadStatusElem.textContent = 'Loaded from ' + userId + ': ' + displayName + '\'s Spotify.';
                     spotifySaveElem.style.display = '';
                     var playlistsText = JSON.stringify(playlists, null, 4);
                     var playlistsBlob = new Blob([playlistsText], { type : 'application/json' });
-                    fileSaveElem.onclick = function () {
+                    fileSaveBtn.onclick = function () {
                         saveAs(userId + '.json', playlistsBlob);
                     };
                     fileSaveElem.style.display = '';
                 });
+
+                loadStatusElem.textContent = 'Loading ' + userId + ': ' + displayName + '\'s Spotify...';
+                loadStatusElem.style.display = '';
             };
         });
 
-        fileLoadElem.onclick = function () {
+        fileLoadBtn.onclick = function () {
 
         };
 
@@ -130,9 +141,6 @@ window.onload = function () {
         dropZoneElem.ondrop = function (event) {
             event.preventDefault();
             dropZoneElem.style.visibility = 'hidden';
-
-            spotifySaveElem.style.display = 'none';
-            fileSaveElem.style.display = 'none';
             
             var file = event.dataTransfer.files[0];
             var reader = new FileReader();
@@ -141,7 +149,7 @@ window.onload = function () {
                 var playlists = json;
                 window.playlists = playlists;
 
-                spotifySaveElem.onclick = function () {
+                spotifySaveBtn.onclick = function () {
                     for (var i = 0; i < playlists.length; ++i) {
                         var playlist = playlists[i];
                         var jsonData = { 'public': playlist['public'] };
@@ -150,13 +158,18 @@ window.onload = function () {
                     }
                 };
 
+                loadStatusElem.textContent = 'Loaded from file ' + file.name +  '.';
+
                 spotifySaveElem.style.display = '';
+                fileSaveElem.style.display = '';
             };
             reader.readAsText(file);
+            loadStatusElem.textContent = 'Loading file ' + file.name + '...';
+            loadStatusElem.style.display = '';
         };
     };
 
-    document.getElementById('spotify-authorize').onclick = function () {
+    document.getElementById('spotify-auth-btn').onclick = function () {
         var authorizeQueryParams = {
             'client_id': SPOTIFY_CLIENT_ID,
             'response_type': 'token',

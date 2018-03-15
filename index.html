@@ -8,17 +8,43 @@
 </head>
 <body>
     <div id="content">
-        <div id="spotify-no-auth">
-            <p>No account authorized.</p>
-        </div>
-        <div id="spotify-yes-auth" style="display: none;">
-            <p>Authorized as <span id="spotify-auth-user"></span></p>
-        </div>
-        <input id="spotify-authorize" type="button" value="Authorize">
-        <input id="spotify-load" type="button" value="Load From Spotify" style="display: none;">
-        <input id="spotify-save" type="button" value="Add to Spotify" style="display: none;">
-        <input id="file-load" type="button" value="Load From File" style="display: none;">
-        <input id="file-save" type="button" value="Save To File" style="display: none;">
+        <fieldset id="spotify-auth">
+            <legend>Authorize Spotify Account</legend>
+            <div id="spotify-auth-status">No account authorized.</div>
+            <div>
+                <input id="spotify-auth-btn" type="button" value="Authorize">
+            </div>
+        </fieldset>
+        <fieldset id="spotify-load" style="display: none;">
+            <legend>Load From Spotify</legend>
+            <div>
+                <input id="spotify-load-playlist-tracks-chkbox" type="checkbox">
+                <label for="spotify-load-playlist-tracks-chkbox">Load Playlist Tracks</label>
+            </div>
+            <div>
+                <input id="spotify-load-btn" type="button" value="Load From Spotify"">
+            </div>
+        </fieldset>
+        <fieldset id="file-load" style="display: none;">
+            <legend>Load From File</legend>
+            <div>
+                <input id="file-load-btn" type="button" value="Load From File">
+            </div>
+            <div>Or drag and drop onto page.</div>
+        </fieldset>
+        <div id="load-status" style="display: none;"></div>
+        <fieldset id="spotify-save" style="display: none;">
+            <legend>Add To Spotify</legend>
+            <div>
+                <input id="spotify-save-btn" type="button" value="Add To Spotify">
+            </div>
+        </fieldset>
+        <fieldset id="file-save" style="display: none;">
+            <legend>Save To File</legend>
+            <div>
+                <input id="file-save-btn" type="button" value="Save To File">
+            </div>
+        </fieldset>
     </div>
     <div id="drop-zone" style="width: 100%; height: 100%; position: fixed; top: 0; left: 0; visibility: hidden;">
         <div style="width: 100%; height: 100%; display: flex;">
