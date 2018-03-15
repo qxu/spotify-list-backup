@@ -170,10 +170,6 @@ window.onload = function () {
         var left = (window.screen.width - width) / 2;
         var top = (window.screen.height - height) / 2;
 
-        authWindow = window.open(
-            "https://accounts.spotify.com/authorize?" + buildURIParams(authorizeQueryParams),
-            "Spotify",
-            'menubar=no,location=no,scrollbars=no,status=no,width=' + width + ',height=' + height + ',top=' + top + ',left=' + left
-        );
+        authWindow = window.open('https://accounts.spotify.com/authorize?' + buildURIParams(authorizeQueryParams), 'spotify-auth-window', 'menubar=no,location=no,scrollbars=no,status=no,width=' + width + ',height=' + height + ',top=' + top + ',left=' + left);
     };
 }
